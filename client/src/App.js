@@ -15,7 +15,7 @@ class App extends Component {
 
   state = {
     results: [],
-    savedArticles: ['SavedArticle1', 'SavedArticle2', 'SavedArticle3'],
+    savedArticles: [],
     topic: "",
     startYear: "",
     endYear: ""
@@ -61,13 +61,14 @@ class App extends Component {
 
     var savedArticle = {};
 
-    
+
     savedArticle.snippet = snippet;
     savedArticle.web_url = web_url;
     savedArticle.pub_date = pub_date;
-    
-    //API.saveArticles(savedArticle);
 
+    API.saveArticles(savedArticle)
+      .then(res => this.setState({ savedArticles: res.data }))
+      .catch(err => console.log("error is " + err));
 
 
     console.log(savedArticle);
@@ -113,7 +114,7 @@ class App extends Component {
                   {resultRow.snippet}<br />
                   {resultRow.web_url}<br />
                   {resultRow.pub_date}<br />
-                  <SaveBtn onClick={() => this.handleSave(resultRow._id, resultRow.snippet, resultRow.web, resultRow.pub_date)} value="Save" />
+                  <SaveBtn onClick={() => this.handleSave(resultRow._id, resultRow.snippet, resultRow.web_url, resultRow.pub_date)} value="Save" />
                 </ListItem>))}
             </List>
           ) : (<h3> No Results to display </h3>)}
