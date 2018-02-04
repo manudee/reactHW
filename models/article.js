@@ -14,7 +14,7 @@ var articleSchema = new Schema({
         required: true
     },
 
-    link : {
+    url : {
         type: String,
         required: true,
         unique: true
@@ -24,12 +24,6 @@ var articleSchema = new Schema({
     saved: {
         type: Boolean,
         default: false
-    },
-
-    note: {
-
-        type: Schema.Types.ObjectId,
-        ref:"note"
     }
 
 

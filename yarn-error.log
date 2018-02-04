@@ -1,0 +1,31 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\Manasi\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js start
+
+PATH: 
+  C:\WINDOWS;C:\WINDOWS\system32;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\nodejs\;C:\Program Files\MongoDB\Server\3.6\bin;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Users\Manasi\AppData\Local\Programs\Python\Python36-32\Scripts\;C:\Users\Manasi\AppData\Local\Programs\Python\Python36-32\;C:\Users\Manasi\AppData\Local\Microsoft\WindowsApps;C:\Users\Manasi\AppData\Roaming\npm;C:\Program Files\Heroku\bin;C:\Program Files\Microsoft VS Code\bin;C:\Users\Manasi\AppData\Local\atom\bin
+
+Yarn version: 
+  1.3.2
+
+Node version: 
+  6.11.1
+
+Platform: 
+  win32 x64
+
+npm manifest: 
+  
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  SyntaxError: C:\Users\Manasi\Documents\reactHW\package.json: Unexpected end of JSON input
+      at Object.parse (native)
+      at C:\Users\Manasi\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:770:59
+      at next (native)
+      at step (C:\Users\Manasi\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:92:30)
+      at C:\Users\Manasi\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:103:13

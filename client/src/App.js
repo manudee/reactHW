@@ -8,13 +8,13 @@ import { List } from './Components/List/List.js';
 import { ListItem } from './Components/List/ListItem.js';
 import { SaveBtn } from './Components/Buttons/SaveBtn.js';
 import { RemoveBtn } from './Components/Buttons/RemoveBtn.js';
-
+import API from './utils/API.js';
 
 class App extends Component {
 
 
   state = {
-    results: ['result1', 'result2', 'result3'],
+    results: [],
     savedArticles: ['SavedArticle1', 'SavedArticle2', 'SavedArticle3'],
     topic: "",
     startYear: "",
@@ -33,22 +33,46 @@ class App extends Component {
   };
 
 
-  handleFormSubmit = event =>{
+  handleFormSubmit = event => {
 
-      event.preventDefault();
+    event.preventDefault();
 
-     if(this.state.topic){
-        //make a call to API with above inputs fields of topic, startyear and endyear
+    var topic = this.state.topic;
+    var startYear = this.state.startYear;
+    var endYear = this.state.endYear;
 
-        var topic = this.state.topic;
-        var startYear = this.state.startYear;
-        var endYear = this.state.endYear;
-        console.log(this.state.topic);
-        console.log(this.state.startYear);
-        console.log(this.state.endYear);
+    var queryTerm = { topic, startYear, endYear };
+
+    API.getArticles(queryTerm)
+      .then(res => {
+        console.log(res.data);
+        this.setState({
+          results: res.data.response.docs,
+          topic: "",
+          startYear: "",
+          endYear: ""
+        })
+      })
+      .catch(err => console.log(err));
+  }
+
+
+  handleSave = (id, snippet, web_url, pub_date) => {
+
+    var savedArticle = {};
 
     
-      }
+    savedArticle.snippet = snippet;
+    savedArticle.web_url = web_url;
+    savedArticle.pub_date = pub_date;
+    
+    //API.saveArticles(savedArticle);
+
+
+
+    console.log(savedArticle);
+
+
 
 
   }
@@ -61,32 +85,35 @@ class App extends Component {
         <Container title="Search" body="body">
           <form>
             <Title name='topic'> Topic </Title>
-            <Input 
-            name="topic"
-            value={this.state.topic}
-            onChange={this.handleInputChange} />
+            <Input
+              name="topic"
+              value={this.state.topic}
+              onChange={this.handleInputChange} />
             <Title name='startYear'> StartYear </Title>
-            <Input 
-            name="startYear"
-            value={this.state.startyear}
-            onChange={this.handleInputChange}
-             />
+            <Input
+              name="startYear"
+              value={this.state.startYear}
+              onChange={this.handleInputChange}
+            />
             <Title name='endYear'> EndYear </Title>
-            <Input 
-            name="endYear"
-            value={this.state.endYear}
-            onChange={this.handleInputChange} />
+            <Input
+              name="endYear"
+              value={this.state.endYear}
+              onChange={this.handleInputChange} />
           </form>
-          <SubmitBtn
-          onClick={() => this.handleFormSubmit()}>Search</SubmitBtn>
+          {/* <button type="submit" onClick={this.handleFormSubmit}>Submit</button> */}
+          <SubmitBtn type="submit"
+            onClick={this.handleFormSubmit}>Search</SubmitBtn>
         </Container>
         <Container title="Results" body="body">
           {this.state.results.length ? (
             <List>
               {this.state.results.map(resultRow => (
-                <ListItem>
-                  {resultRow}
-                  <SaveBtn value="Save" />
+                <ListItem key={resultRow._id}>
+                  {resultRow.snippet}<br />
+                  {resultRow.web_url}<br />
+                  {resultRow.pub_date}<br />
+                  <SaveBtn onClick={() => this.handleSave(resultRow._id, resultRow.snippet, resultRow.web, resultRow.pub_date)} value="Save" />
                 </ListItem>))}
             </List>
           ) : (<h3> No Results to display </h3>)}
